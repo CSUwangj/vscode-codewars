@@ -8,13 +8,27 @@
     "plugins": [
         "@typescript-eslint"
     ],
+    "extends": [
+      "plugin:@typescript-eslint/recommended"
+    ],
     "rules": {
         "@typescript-eslint/naming-convention": "warn",
-        "@typescript-eslint/semi": "warn",
         "curly": "warn",
         "eqeqeq": "warn",
         "no-throw-literal": "warn",
-        "semi": "off"
+        "indent": ["error", 2],
+        "semi": ["error", "never"],
+        "@typescript-eslint/member-delimiter-style": ["error", {
+        "multiline": {
+            "delimiter": "none",
+            "requireLast": false
+        },
+        "singleline": {
+            "delimiter": "comma",
+            "requireLast": false
+        }
+        }],
+        "@typescript-eslint/explicit-function-return-type": "off"
     },
     "ignorePatterns": [
         "out",
