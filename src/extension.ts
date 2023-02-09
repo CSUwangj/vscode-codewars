@@ -5,6 +5,7 @@ import * as path from 'path'
 import slugify from 'slugify'
 import { pathExists, createFile } from 'fs-extra'
 import { writeFile } from 'fs'
+import { codeLensController } from './codelens/CodeLensController'
 
 export function activate(context: ExtensionContext) {
   const disposable =  commands.registerCommand('vscode-codewars.nextChallenge', async () => {
@@ -69,14 +70,14 @@ export function activate(context: ExtensionContext) {
     if(!await pathExists(filePath)) {
       await createFile(filePath)
 
-      const content = `/// Solution id=${problemData.solutionId} lang=${language}\n${problemData.setup}\n/// Solution End\n\n/// Sample Tests${problemData.exampleFixture}/// Test End\n`
+      const content = `/// Solution id=${problemData.solutionId} lang=${language}\n${problemData.setup}\n/// Solution End\n\n/// Sample Tests\n${problemData.exampleFixture}\n/// Test End\n`
       writeFile(filePath, content, (err) => {
         console.error(err)
       })
     }
   })
 
-  context.subscriptions.push(disposable)
+  context.subscriptions.push(disposable, codeLensController)
 }
 
 // This method is called when your extension is deactivated
