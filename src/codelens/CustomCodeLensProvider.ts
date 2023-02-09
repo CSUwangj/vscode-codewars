@@ -33,13 +33,13 @@ export class CustomCodeLensProvider implements CodeLensProvider {
 
     codeLens.push(new CodeLens(range, {
       title: "Submit",
-      command: "codewars.submitSolution",
+      command: "vscode-codewars.submitSolution",
       arguments: [document.uri],
     }))
 
     codeLens.push(new CodeLens(range, {
       title: "Test",
-      command: "codewars.testSolution",
+      command: "vscode-codewars.testSolution",
       arguments: [document.uri],
     }))
 
