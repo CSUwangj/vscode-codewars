@@ -14,7 +14,7 @@ export class CustomCodeLensProvider implements CodeLensProvider {
 
   public provideCodeLenses(document: TextDocument): ProviderResult<CodeLens[]> {
     const content: string = document.getText()
-    const matchResult: RegExpMatchArray | null = content.match(/\/\/\/ Solution id=(.*) lang=(.*)/)
+    const matchResult = content.match(/\/\/\/ Solution id=(.*) lang=(.*)/)
     if (!matchResult) {
       return undefined
     }
@@ -22,7 +22,7 @@ export class CustomCodeLensProvider implements CodeLensProvider {
     let codeLensLine: number = document.lineCount - 1
     for (let i: number = document.lineCount - 1; i >= 0; i--) {
       const lineContent: string = document.lineAt(i).text
-      if (lineContent.indexOf("/// Test End") >= 0) {
+      if (lineContent.indexOf("/// Test End") >= 0 || lineContent.indexOf("/// Solution End") >= 0) {
         codeLensLine = i + 1
         break
       }
