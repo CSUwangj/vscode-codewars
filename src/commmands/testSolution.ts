@@ -4,7 +4,7 @@ import { readFile } from "fs-extra"
 import MarkdownIt = require("markdown-it")
 import { commands, Uri, ViewColumn, window } from "vscode"
 
-export const submitSolution =  commands.registerCommand('vscode-codewars.submitSolution', async (uri: Uri) => {
+export const testSolution =  commands.registerCommand('vscode-codewars.testSolution', async (uri: Uri) => {
   const solutionRegex = /\/\/\/ Solution id=(.*) lang=(.*).*\n((.+\n)+?)\/\/\/ Solution End/
   const content = (await readFile(uri.fsPath)).toString()
   const matchResult = content.match(solutionRegex)
@@ -15,7 +15,7 @@ export const submitSolution =  commands.registerCommand('vscode-codewars.submitS
   const endpoint = matchResult[1]
   const language = matchResult[2]
   const solution = matchResult[3]
-  const fixtureRegex = /\/\/\/ Fixture.*\n((.+\n)+?)\/\/\/ Fixture End/
+  const fixtureRegex = /\/\/\/ Sample Tests.*\n((.*\n)+?)\/\/\/ Tests End/
   const fixtureMatchResult = content.match(fixtureRegex)
   if(!fixtureMatchResult) {
     window.showErrorMessage("No fixture.")
@@ -43,10 +43,7 @@ export const submitSolution =  commands.registerCommand('vscode-codewars.submitS
   }
   const body = {
     "channel": "runner:" + randomUUID(),
-    "ciphered": [,
-      "setup",
-      "fixture",
-    ],
+    "ciphered": ["setup"],
     "code": solution,
     "fixture": fixture,
     "language": language,
@@ -55,6 +52,7 @@ export const submitSolution =  commands.registerCommand('vscode-codewars.submitS
     "setup": "",
     "successMode": null,
     "testFramework": "rust",
+    
   }
   await axios.post("https://www.codewars.com/api/v1/runner/authorize", null, { headers : headers }).catch((e) => console.log(e))
   const authorization = `Bearer ${(await axios.post("https://www.codewars.com/api/v1/runner/authorize", null, { headers : headers })).data.token}`
@@ -62,33 +60,33 @@ export const submitSolution =  commands.registerCommand('vscode-codewars.submitS
     ...headers,
     "authorization": authorization
   } })).data
-  
-  
+    
+    
   const panel = window.createWebviewPanel("codewars.submission", "Submission", { preserveFocus: true, viewColumn: ViewColumn.Two })
   const mdEngine = new MarkdownIt()
   const description = mdEngine.render(`
-- return code: ${response.exitCode}
-- passed: ${response.result.passed}
-- failed: ${response.result.failed}
-- time: ${response.wallTime}
-
----
-
-\`\`\`
-${response.stderr ?? response.stdout}
-\`\`\`
- `)
+  - return code: ${response.exitCode}
+  - passed: ${response.result.passed}
+  - failed: ${response.result.failed}
+  - time: ${response.wallTime}
+  
+  ---
+  
+  \`\`\`
+  ${response.stderr ?? response.stdout}
+  \`\`\`
+   `)
   panel.webview.html = description
 })
-
+  
 interface IResult {
-  exitCode: number
-  message: string
-  result: {
+exitCode: number
+message: string
+result: {
     failed: number
     passed: number
-  }
-  stderr: string
-  stdout: string
-  wallTime: number
+}
+stderr: string
+stdout: string
+wallTime: number
 }

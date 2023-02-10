@@ -1,4 +1,4 @@
-import { ConfigurationChangeEvent, Disposable, languages, workspace } from "vscode"
+import { Disposable, languages } from "vscode"
 import { customCodeLensProvider, CustomCodeLensProvider } from "./CustomCodeLensProvider"
 
 class CodeLensController implements Disposable {
@@ -17,4 +17,4 @@ class CodeLensController implements Disposable {
   }
 }
 
-export const codeLensController: CodeLensController = new CodeLensController()
+export const codeLensController = new CodeLensController()

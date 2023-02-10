@@ -67,7 +67,7 @@ export const nextChallenge =  commands.registerCommand('vscode-codewars.nextChal
   if(!await pathExists(filePath)) {
     await createFile(filePath)
 
-    const content = `/// Solution id=${problemData.solutionId} lang=${language}\n${problemData.setup}\n/// Solution End\n\n/// Sample Tests\n${problemData.exampleFixture}\n/// Test End\n\n/// Fixture\n${problemData.fixture}\n/// Fixture End\n`
+    const content = `/// Solution id=${problemData.solutionId} lang=${language}\n${problemData.setup}\n/// Solution End\n\n/// Sample Tests\n${problemData.exampleFixture}\n/// Tests End\n\n/// Fixture\n${problemData.fixture}\n/// Fixture End\n`
     writeFile(filePath, content, (err) => {
       console.error(err)
     })
