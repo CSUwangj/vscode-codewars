@@ -3,7 +3,7 @@ import { pathExists, createFile, writeFile } from "fs-extra"
 import MarkdownIt = require("markdown-it")
 import path = require("path")
 import slugify from "slugify"
-import { commands, window, ViewColumn, workspace } from "vscode"
+import { commands, window, ViewColumn, workspace, Uri } from "vscode"
 
 export const nextChallenge =  commands.registerCommand('vscode-codewars.nextChallenge', async () => {
   // TODO: add language & cookies setting
@@ -42,7 +42,7 @@ export const nextChallenge =  commands.registerCommand('vscode-codewars.nextChal
   const sessionUrl = `https://www.codewars.com${sessionPath.replace("%7Blanguage%7D", language)}`
   const problemData = (await axios.post(sessionUrl, {} ,{ "headers": headers })).data
   const challengeName = challengeData.challengeName
-  const panel = window.createWebviewPanel("codewars.webview", "Description", { preserveFocus: true, viewColumn: ViewColumn.Beside })
+  const panel = window.createWebviewPanel("codewars.description", "Description", { preserveFocus: true, viewColumn: ViewColumn.Two })
   const mdEngine = new MarkdownIt()
   const description = mdEngine.render(challengeData?.description)
   panel.webview.html = description
@@ -67,9 +67,10 @@ export const nextChallenge =  commands.registerCommand('vscode-codewars.nextChal
   if(!await pathExists(filePath)) {
     await createFile(filePath)
 
-    const content = `/// Solution id=${problemData.solutionId} lang=${language}\n${problemData.setup}\n/// Solution End\n\n/// Sample Tests\n${problemData.exampleFixture}\n/// Test End\n`
+    const content = `/// Solution id=${problemData.solutionId} lang=${language}\n${problemData.setup}\n/// Solution End\n\n/// Sample Tests\n${problemData.exampleFixture}\n/// Test End\n\n/// Fixture\n${problemData.fixture}\n/// Fixture End\n`
     writeFile(filePath, content, (err) => {
       console.error(err)
     })
   }
+  window.showTextDocument(Uri.file(filePath), { preview: false, viewColumn: ViewColumn.One })
 })
