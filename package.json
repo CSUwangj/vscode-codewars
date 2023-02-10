@@ -18,8 +18,58 @@
       {
         "command": "vscode-codewars.nextChallenge",
         "title": "Codewars: Next Challenge"
+      },
+      {
+        "command": "vscode-codewars.submitSolution",
+        "title": "Codewars: Submit Current Solution"
+      },
+      {
+        "command": "vscode-codewars.testSolution",
+        "title": "Codewars: Test Current Solution"
+      },
+      {
+        "command": "vscode-codewars.signin",
+        "title": "Codewars: Sign In"
       }
-    ]
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "codewars",
+          "title": "Codewars",
+          "icon": "resources/codewars.svg"
+        }
+      ]
+    },
+    "views": {
+      "codewars": [
+        {
+          "id": "codewars",
+          "name": "Codewars"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "vscode-codewars.signin",
+          "when": "view == codewars",
+          "group": "navigation@1"
+        }
+      ],
+      "explorer/context": [
+        {
+          "command": "vscode-codewars.testSolution",
+          "when": "explorerResourceIsFolder == false",
+          "group": "codewars@1"
+        },
+        {
+          "command": "vscode-codewars.submitSolution",
+          "when": "explorerResourceIsFolder == false",
+          "group": "codewars@2"
+        }
+      ]
+    }
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
