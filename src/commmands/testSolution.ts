@@ -5,7 +5,7 @@ import MarkdownIt = require("markdown-it")
 import { commands, Uri, ViewColumn, window } from "vscode"
 
 export const testSolution =  commands.registerCommand('vscode-codewars.testSolution', async (uri: Uri) => {
-  const solutionRegex = /\/\/\/ Solution id=(.*) lang=(.*).*\n((.+\n)+?)\/\/\/ Solution End/
+  const solutionRegex = /\/\/\/ Solution id=(.*) lang=(.*) lang_ver=(.+).*\n((.+\n)+?)\/\/\/ Solution End/
   const content = (await readFile(uri.fsPath)).toString()
   const matchResult = content.match(solutionRegex)
   if(!matchResult) {
@@ -14,7 +14,8 @@ export const testSolution =  commands.registerCommand('vscode-codewars.testSolut
   }
   const endpoint = matchResult[1]
   const language = matchResult[2]
-  const solution = matchResult[3]
+  const languageVersion = matchResult[3]
+  const solution = matchResult[4]
   const fixtureRegex = /\/\/\/ Sample Tests.*\n((.*\n)+?)\/\/\/ Tests End/
   const fixtureMatchResult = content.match(fixtureRegex)
   if(!fixtureMatchResult) {
@@ -47,7 +48,7 @@ export const testSolution =  commands.registerCommand('vscode-codewars.testSolut
     "code": solution,
     "fixture": fixture,
     "language": language,
-    "languageVersion": "1.66",
+    "languageVersion": languageVersion,
     "relayId": endpoint,
     "setup": "",
     "successMode": null,
