@@ -69,6 +69,25 @@
           "group": "codewars@2"
         }
       ]
+    },
+    "configuration": {
+      "title": "Codewars",
+      "properties": {
+        "codewars.defaultLanguage": {
+          "type": "string",
+          "enum": [
+            "rust",
+            "typescript"
+          ],
+          "scope": "application",
+          "description": "Default language for solving the katas."
+        },
+        "codewars.cookies": {
+          "type": "string",
+          "scope": "application",
+          "description": "Used for login."
+        }
+      }
     }
   },
   "scripts": {
