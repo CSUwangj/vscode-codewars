@@ -1,0 +1,17 @@
+export const baseHeaders = {
+  "accept": "application/json, text/plain, */*",
+  "accept-language": "zh-CN,zh;q=0.9,en;q=0.8",
+  "authorization": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjVjMmI5MWU3ZTY1OWJlNGYyNzhhMDY1YiIsImV4cCI6MTY3NjM5MTQ4NH0.vOQ1N-BtK98uDBRgXmiRZxtfZ7d3WAXyiiI2seXC2bM",
+  "cf-cache-status": "DYNAMIC",
+  "cache-control": "no-cache",
+  "pragma": "no-cache",
+  "sec-ch-ua": "\"Not_A Brand\";v=\"99\", \"Google Chrome\";v=\"109\", \"Chromium\";v=\"109\"",
+  "sec-ch-ua-mobile": "?0",
+  "sec-ch-ua-platform": "\"Windows\"",
+  "sec-fetch-dest": "empty",
+  "sec-fetch-mode": "cors",
+  "sec-fetch-site": "same-origin",
+  "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36",
+  "x-csrf-token": "wJnUvGv7jfXfcWQxJPJLVaLHUg23lnhQGMZJY3X5bpLFZSPpChscg5z70nJn5LwTC/oD3YURA9j3gJg+sC5jvQ==",
+  "x-requested-with": "XMLHttpRequest",
+}

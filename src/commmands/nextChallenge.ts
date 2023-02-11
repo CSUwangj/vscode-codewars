@@ -4,28 +4,15 @@ import MarkdownIt = require("markdown-it")
 import path = require("path")
 import slugify from "slugify"
 import { commands, window, ViewColumn, workspace, Uri } from "vscode"
+import { baseHeaders } from "../const"
 
 export const nextChallenge =  commands.registerCommand('vscode-codewars.nextChallenge', async () => {
   // TODO: add language & cookies setting
   const language = "rust"
   const cookies = "signed_in=false; _ga=GA1.1.1748630920.1675523611; remember_user_token=eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaGJDRnNHU1NJZE5XTXlZamt4WlRkbE5qVTVZbVUwWmpJM09HRXdOalZpQmpvR1JWUkpJaGxOZVcxRFdGWmpOV2x2WWpOeFEyOWtSVVJOWXdZN0FFWkpJaGN4TmpjMU5USXpOalV5TGpJNE1qSTBOVFlHT3dCRyIsImV4cCI6IjIwMjQtMDItMDRUMTU6MTQ6MTIuMjgyWiIsInB1ciI6bnVsbH19--2c4a318a768f311ff1f48fa308ce20237bb3dff3; _session_id=e518775cd6d9330691d2c989376025de; intercom-device-id-x27gw54w=b2ca6bce-0058-4ccb-9dcc-3842d7594dce; intercom-session-x27gw54w=WlFRRjRnbmNMalg3U1pCVG01NnV1ejdRTWtmckJsZlJHK095Z1JTS0d5eWtnZWhIak5UZmR4NldGdVYvdzI1ci0tbkE1cTlGdnFlc1Mycm5JNnVYS05qdz09--d42ddaa6dbe3aaf3a97c54749c43bdbb97f0c20b; _ga_M3JYSQLS8M=GS1.1.1675526019.2.1.1675530435.0.0.0; CSRF-TOKEN=tLGCEw3xS1kCw+v7nlpYqO3JX0w8ug4TgY8IQilBJTixTXVGbBHaL0FJXbjdTK/uRPQOnA49dZtuydkf7JYoFw=="
   const headers = {
-    "accept": "application/json, text/plain, */*",
-    "accept-language": "zh-CN,zh;q=0.9,en;q=0.8",
-    "authorization": "eyJhbGciOiJIUzI1NiJ9.eyJpZCI6IjVjMmI5MWU3ZTY1OWJlNGYyNzhhMDY1YiIsImV4cCI6MTY3NjM5MTQ4NH0.vOQ1N-BtK98uDBRgXmiRZxtfZ7d3WAXyiiI2seXC2bM",
-    "cf-cache-status": "DYNAMIC",
-    "cache-control": "no-cache",
-    "cookie": cookies,
-    "pragma": "no-cache",
-    "sec-ch-ua": "\"Not_A Brand\";v=\"99\", \"Google Chrome\";v=\"109\", \"Chromium\";v=\"109\"",
-    "sec-ch-ua-mobile": "?0",
-    "sec-ch-ua-platform": "\"Windows\"",
-    "sec-fetch-dest": "empty",
-    "sec-fetch-mode": "cors",
-    "sec-fetch-site": "same-origin",
-    "user-agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/109.0.0.0 Safari/537.36",
-    "x-csrf-token": "wJnUvGv7jfXfcWQxJPJLVaLHUg23lnhQGMZJY3X5bpLFZSPpChscg5z70nJn5LwTC/oD3YURA9j3gJg+sC5jvQ==",
-    "x-requested-with": "XMLHttpRequest",
+    ...baseHeaders,
+    "cookies": cookies
   }
   const nextChallenge = await axios.get(`https://www.codewars.com/trainer/peek/${language}/default?dequeue=false`, { "headers": headers })
   if(!nextChallenge.data?.success || !nextChallenge.data?.href || !nextChallenge.data?.language) {
